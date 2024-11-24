@@ -42,8 +42,11 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Unsafe
+# Sensitive Firebase Files
 google-services.json
-/lib/firebase_options.dart
-/macos/Runner/GoogleService-Info.plist
-/ios/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+macos/Runner/GoogleService-Info.plist
+ios/Runner/GoogleService-Info.plist
+
+# Ignore all potential Firebase configuration files
+**/GoogleService-Info.plist
