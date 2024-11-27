@@ -1,4 +1,6 @@
+import 'package:cvpr_projekt/router.config.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +16,12 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: const Center(
-        child: Text('TODO'),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            context.go('/search');
+          },
+          child: const Text('Search')),
       ),
     );
   }
