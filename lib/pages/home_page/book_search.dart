@@ -36,7 +36,7 @@ class _BookSearchState extends State<BookSearch> {
                           searchText = value;
                         });
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Book name',
                       ),
@@ -49,20 +49,21 @@ class _BookSearchState extends State<BookSearch> {
                       onPressed: () {
                         searchBooks(searchText);
                       },
-                      child: Text('Search'),
+                      child: const Text('Search'),
                     ),
                   ],
                 ),
               ],
             ),
-            Column(
+            ListView(
               children: 
-                books.map((book) => Row(
-                      children: [
-                        Expanded(child: Text(book.title)),
-                        Expanded(child: Text(book.author)),
-                      ],
-                    ))
+                books.map((book) {
+                  return ListTile(
+                    title: Text(book.title!),
+                    subtitle: Text(book.author!),
+                    trailing: Text(book.pages.toString()),
+                  );
+                }).toList(),
             ),
           ],
         ),
