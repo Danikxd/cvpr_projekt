@@ -9,6 +9,7 @@ class Book {
   String? description;
   int? avgRating;
   DateTime? publishedDate;
+  bool favourite = false;
 
   Book({this.title, this.authors, this.pageCount, this.thumbnail, this.publisher, this.description, this.avgRating, this.id});
 
