@@ -1,4 +1,3 @@
-import 'package:cvpr_projekt/router.config.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
