@@ -98,7 +98,14 @@ class _BookSearchState extends State<BookSearch> {
     setState(() {
       print(
           "DATA: id${book.id} authors${book.authors} pagecount${book.pageCount} publisher${book.publisher} title${book.title} avgRating${book.avgRating} description${book.description} sthumbnail${book.smallThumbnail} thumbnail${book.thumbnail}");
-      books = [book];
+      if(book.title!.toLowerCase().contains(search.toLowerCase())) {
+        if (!books.any((b) => b.title == book.title)) {
+          books.add(book);
+        }
+      }
+      else{
+        books.clear();
+      }
     });
   }
 
@@ -136,6 +143,7 @@ class _BookSearchState extends State<BookSearch> {
                     onChanged: (value) {
                       setState(() {
                         searchText = value;
+                        searchBooks(searchText);
                       });
                     },
                     decoration: const InputDecoration(
@@ -144,7 +152,7 @@ class _BookSearchState extends State<BookSearch> {
                     ),
                   ),
                 ),
-                Column(
+                /* Column(
                   children: [
                     ElevatedButton(
                       onPressed: () {
@@ -153,7 +161,7 @@ class _BookSearchState extends State<BookSearch> {
                       child: const Text('Search'),
                     ),
                   ],
-                ),
+                ), */
               ],
             ),
             Expanded(
