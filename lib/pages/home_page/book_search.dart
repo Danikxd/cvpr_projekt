@@ -1,3 +1,4 @@
+import 'package:cvpr_projekt/persistent/book_api.dart';
 import 'package:flutter/material.dart';
 import 'package:cvpr_projekt/models/book.dart';
 
@@ -100,7 +101,11 @@ class _BookSearchState extends State<BookSearch> {
     books.add(book);
   }
   void searchBooks(String search) {
-
+    BookApi.instance.getBooks(search).then((value) {
+      setState(() {
+        books = value;
+      });
+    });
   }
 
   void addToFavourites(Book book) {
@@ -137,7 +142,6 @@ class _BookSearchState extends State<BookSearch> {
                     onChanged: (value) {
                       setState(() {
                         searchText = value;
-                        searchBooks(searchText);
                       });
                     },
                     decoration: const InputDecoration(
