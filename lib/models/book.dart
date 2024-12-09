@@ -1,10 +1,12 @@
+import 'package:cvpr_projekt/utils/date_parse.dart';
+
 class Book {
   String? title;
   String? id;
   int? pageCount;
   String? thumbnail;
   String? smallThumbnail;
-  List<String>? authors;
+  List<dynamic>? authors;
   String? publisher;
   String? description;
   int? avgRating;
@@ -23,5 +25,5 @@ class Book {
     publisher = json['volumeInfo']['publisher'],
     description = json['volumeInfo']['description'],
     avgRating = json['volumeInfo']['averageRating'],
-    publishedDate = DateTime.parse(json['volumeInfo']['publishedDate']);
+    publishedDate = DateParse.parse(json['volumeInfo']['publishedDate']);
 }
