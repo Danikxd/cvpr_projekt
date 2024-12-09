@@ -12,9 +12,12 @@ class _BookSearchState extends State<BookSearch> {
   String searchText = '';
   List<Book> books = [];
   List<String> favourites = [];
-  void searchBooks(String search) {
 
-    Map<String, dynamic> bookdata = {
+
+  @override
+  void initState(){
+    super.initState();
+     Map<String, dynamic> bookdata = {
       "kind": "books#volume",
       "id": "Gi-2DwAAQBAJ",
       "etag": "SRPXr2aNsIo",
@@ -94,19 +97,10 @@ class _BookSearchState extends State<BookSearch> {
     };
 
     Book book = Book.fromJson(bookdata);
+    books.add(book);
+  }
+  void searchBooks(String search) {
 
-    setState(() {
-      print(
-          "DATA: id${book.id} authors${book.authors} pagecount${book.pageCount} publisher${book.publisher} title${book.title} avgRating${book.avgRating} description${book.description} sthumbnail${book.smallThumbnail} thumbnail${book.thumbnail}");
-      if(book.title!.toLowerCase().contains(search.toLowerCase())) {
-        if (!books.any((b) => b.title == book.title)) {
-          books.add(book);
-        }
-      }
-      else{
-        books.clear();
-      }
-    });
   }
 
   void addToFavourites(Book book) {
@@ -152,21 +146,18 @@ class _BookSearchState extends State<BookSearch> {
                     ),
                   ),
                 ),
-                /* Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        searchBooks(searchText);
-                      },
-                      child: const Text('Search'),
-                    ),
-                  ],
-                ), */
+                ElevatedButton(
+                  onPressed: () {
+                    searchBooks(searchText);
+                  },
+                  child: const Text('Search'),
+                ), 
               ],
             ),
             Expanded(
               child: ListView(
                 children: books.map((book) {
+                  if(book.title == null || !book.title!.toLowerCase().contains(searchText.toLowerCase()) && searchText != "") return Container();
                   return ListTile(
                     leading: Image.network(
                       book.smallThumbnail ?? "",
@@ -174,7 +165,7 @@ class _BookSearchState extends State<BookSearch> {
                           const Icon(Icons.error),
                     ),
                     title: Text(book.title ?? ""),
-                    subtitle: Column(
+                    subtitle: Row(
                       children: [
                         Text(book.authors?[0] ?? ""),
                         IconButton(
