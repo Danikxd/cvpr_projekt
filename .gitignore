@@ -50,3 +50,5 @@ ios/Runner/GoogleService-Info.plist
 
 # Ignore all potential Firebase configuration files
 **/GoogleService-Info.plist
+
+*.env
