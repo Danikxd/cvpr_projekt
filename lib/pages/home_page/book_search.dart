@@ -1,4 +1,5 @@
 import 'package:cvpr_projekt/persistent/book_api.dart';
+import 'package:cvpr_projekt/persistent/firebase_api.dart';
 import 'package:flutter/material.dart';
 import 'package:cvpr_projekt/models/book.dart';
 
@@ -117,19 +118,31 @@ class _BookSearchState extends State<BookSearch> {
 
     setState(() {
       book.favourite = !book.favourite;
-      if (book.favourite) {
-        favourites.add(bookId);
-      } else {
-        if(favourites.contains(book.id)){
-          favourites.remove(bookId);
-        }
-      }
+      FirebaseApi.instance.modifyFavourites(bookId);
       print('favourite: ${book.favourite}, $favourites');
+    });
+  }
+
+  void addToRead(Book book) {
+    if(book.id == null) {
+      return;
+    }
+
+    String bookId = book.id!;
+
+    setState(() {
+      book.read = !book.read;
+      FirebaseApi.instance.modifyRead(bookId);
+      print('read: ${book.read}, $favourites');
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Book> displayBooks = books;
+    displayBooks.addAll(FirebaseApi.instance.books);
+
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -160,7 +173,7 @@ class _BookSearchState extends State<BookSearch> {
             ),
             Expanded(
               child: ListView(
-                children: books.map((book) {
+                children: displayBooks.map((book) {
                   if(book.title == null || !book.title!.toLowerCase().contains(searchText.toLowerCase()) && searchText != "") return Container();
                   return ListTile(
                     leading: Image.network(
